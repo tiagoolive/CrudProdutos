@@ -10,7 +10,7 @@ import { Product } from './product.model';
 })
 export class ProductService {
 
-  baseUrl = "http://localhost:8791/api/products/"
+  baseUrl = "http://localhost:8791/api/products"
 
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
@@ -28,6 +28,16 @@ export class ProductService {
 
   read(): Observable<Product[]>{
     return this.http.get<Product[]>(this.baseUrl)
+  }
+
+  readById(id: string): Observable<Product>{
+    const url = `${this.baseUrl}/${id}`
+    return this.http.get<Product>(url)
+  }
+
+  update(product: Product): Observable<Product>{
+    const url = `${this.baseUrl}/${product.id}`
+    return this.http.put<Product>(url, product)
   }
   
 }
